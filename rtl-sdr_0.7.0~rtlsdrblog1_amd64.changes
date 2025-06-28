@@ -1,0 +1,48 @@
+Format: 1.8
+Date: Wed, 13 Sep 2023 15:51:00 +1200
+Source: rtl-sdr
+Binary: librtlsdr-dev librtlsdr0 rtl-sdr
+Built-For-Profiles: noudeb
+Architecture: amd64
+Version: 0.7.0~rtlsdrblog1
+Distribution: unstable
+Urgency: medium
+Maintainer: A. Maitland Bottoms <bottoms@debian.org>
+Changed-By: rtl-sdr-blog <admin@rtl-sdr.com>
+Description:
+ librtlsdr-dev - Software defined radio receiver for Realtek RTL2832U (development
+ librtlsdr0 - Software defined radio receiver for Realtek RTL2832U (library)
+ rtl-sdr    - Software defined radio receiver for Realtek RTL2832U (tools)
+Changes:
+ rtl-sdr (0.7.0~rtlsdrblog1) unstable; urgency=medium
+ .
+   25-August-2023: Brought up to date with latest Osmocom upstream, and added some new features like auto-direct sampling. Also made the force bias tee function stronger, so it cant be turned off when the bias tee is forced, even when calling the bias tee function. Remove the rtl_tcp ringbuffer changes as this seems to cause more trouble that it helps.
+   1) VCO PLL current fix - Improves stability at frequencies above ~1.5 GHz https://www.rtl-sdr.com/beta-testing-a-modified-rtl-sdr-driver-for-l-band-heat-issues/
+   2) Enabled direct sampling for rtl_tcp
+   3) Hack to force the bias tee to always be on by setting the unused IR endpoint bit to 0 in the EEPROM. Example to force the BT to be always ON "rtl_eeprom -b 1", to remove forced BT "rtl_eeprom -b 0"
+   4) Repurposed "offset tuning" to toggle bias tee ON/OFF. We can now use the "offset tuning" button in SDR# and other programs to toggle the bias tee if there is no specific button in the GUI.
+   5) Support added for R828D RTL-SDR Blog V4 based dongles.
+   6) Auto direct sampling. For R820T/R860 dongles like the RTL-SDR Blog V3 the code will automatically change to direct sampling mode when the frequency is below 24 MHz. It will also automatically change back to normal sampling when the frequency is above 24 MHz. There is no need to manually change the sampling mode anymore for these dongles.
+   BIAS TEE NOTE: Always take care that you do not enable the bias tee when the device is connected to a short circuited antenna unless there is an inline LNA. However. if you did by accident, don't worry as the circuit is dually protected with a self-resetting thermal fuse and built in protection on the LDO. Just try not to short it out for days at a time, otherwise you could eventually degrade the thermal fuse.
+   Note that hack 3) will only work if your system is using this driver. If your system or software is using another driver fork, then the EEPROM information will not be read. So make sure you completely clean your system of the previous drivers first (with the information below) and ensure you run sudo make install after compiling. On Windows, make sure you are using this code's rtlsdr.dll file.
+Checksums-Sha1:
+ cc2e0e903bad3aa5974aae335ca443980f95dacc 41418 librtlsdr-dev_0.7.0~rtlsdrblog1_amd64.deb
+ 1a9c7e0eb657468aadf74e4bf55e977b46aad818 109380 librtlsdr0-dbgsym_0.7.0~rtlsdrblog1_amd64.ddeb
+ 43a9491f38a0081e9c5ded49e0fd2dd6fec645be 32848 librtlsdr0_0.7.0~rtlsdrblog1_amd64.deb
+ edd4a9088e1e3153fd5f3a405a7959b9735881d7 134098 rtl-sdr-dbgsym_0.7.0~rtlsdrblog1_amd64.ddeb
+ 3eb2066815bc5567b6ad031fe30d766da12e3ee8 8913 rtl-sdr_0.7.0~rtlsdrblog1_amd64.buildinfo
+ 451f3ded469ef84733a88399b91a179f7b270d54 59446 rtl-sdr_0.7.0~rtlsdrblog1_amd64.deb
+Checksums-Sha256:
+ f1b09820c59dd6dd4edc90ded8bdca240f173a58227820901ce86f934cbd72eb 41418 librtlsdr-dev_0.7.0~rtlsdrblog1_amd64.deb
+ b166af5176e37ad0b0916075067f6105d44baa701c20b9e20a420e2e487c6d31 109380 librtlsdr0-dbgsym_0.7.0~rtlsdrblog1_amd64.ddeb
+ 89f6dbf5cf26ad2f802995d92e393d9d092f3bcf4d2c16680ab03a6bfd70c335 32848 librtlsdr0_0.7.0~rtlsdrblog1_amd64.deb
+ e5d43d31ed0cc3528720ac8b0aed056654cbdbbdf3bbfc438f4dee11c2995f7e 134098 rtl-sdr-dbgsym_0.7.0~rtlsdrblog1_amd64.ddeb
+ 491d090e7510a7d722fe9492d7c946ca2c2963b0654e66eea2ac0f98c3918fbf 8913 rtl-sdr_0.7.0~rtlsdrblog1_amd64.buildinfo
+ 3474c5176b96222987eefd32844d6ca96698e9da8dd139666ac029d97563dbb9 59446 rtl-sdr_0.7.0~rtlsdrblog1_amd64.deb
+Files:
+ ebebde8c57368184ea82524046b4daaf 41418 libdevel optional librtlsdr-dev_0.7.0~rtlsdrblog1_amd64.deb
+ b5fc8182dc5ae0cf5cd3178e6281e7b7 109380 debug optional librtlsdr0-dbgsym_0.7.0~rtlsdrblog1_amd64.ddeb
+ 79354c320e43c9544d222eac51d4aaba 32848 libs optional librtlsdr0_0.7.0~rtlsdrblog1_amd64.deb
+ 915e8ea76bf2e03e779a40431f8df6a0 134098 debug optional rtl-sdr-dbgsym_0.7.0~rtlsdrblog1_amd64.ddeb
+ 40fad2b64f367ff15e2c0ddb3e25ef39 8913 comm optional rtl-sdr_0.7.0~rtlsdrblog1_amd64.buildinfo
+ fd2cddabb6b76765250232400b76146a 59446 comm optional rtl-sdr_0.7.0~rtlsdrblog1_amd64.deb
